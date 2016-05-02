@@ -1,0 +1,23 @@
+.container-menu {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.main-menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.main-logo {
+    width: 130px;
+}
+
+.main-content, .main-menu {
+    width: 900px;
+    margin: 0 auto;
+}
+
+.main-content{
+    background: #fff;
+}

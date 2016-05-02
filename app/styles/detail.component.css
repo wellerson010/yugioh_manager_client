@@ -1,0 +1,9 @@
+.container-detail{
+    padding: 10px;
+}
+.container-detail-status {
+    display: inline-block;
+    background: #BFBFBF;
+    font-size: 14px;
+    padding: 7px;
+}

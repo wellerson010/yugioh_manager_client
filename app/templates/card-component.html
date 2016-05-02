@@ -1,0 +1,32 @@
+<div>
+    <form>
+        <div>
+            <label>Name: </label>
+            <input [(ngModel)]="card.name" />
+        </div>
+
+        <div>
+            <label>Attribute: </label>
+            <select [(ngModel)]="card.type" [value]="attribute_card.Dark">
+                <option *ngFor="let item of attribute_card | enumPipe" [value]="item.key">
+                    {{item.value}}
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label>ATK:</label>
+            <input [(ngModel)]="card.atk" />
+        </div>
+
+        <input type="file" />
+
+        <div>
+            <label>DEF:</label>
+            <input [(ngModel)]="card.def" />
+        </div>
+    </form>
+
+    <button type="button" (click)="save()">Save</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+</div>

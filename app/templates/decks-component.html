@@ -1,0 +1,39 @@
+<div class="container-button-table">
+    <button type="button" (click)="add()">Add</button>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <td>
+                Thumbnail
+            </td>
+            <td>
+                Name
+            </td>
+            <td>
+                Price
+            </td>
+            <td>
+                Purchase Date
+            </td>
+            <td>
+                Options
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let deck of decks">
+            <td>
+                <div [style.backgroundImage]="setThumbnail(deck)" class="thumbnail-table"></div>
+            </td>
+            <td>{{deck.name}}</td>
+            <td>{{deck.price}}</td>
+            <td>{{deck.purchase_date}}</td>
+            <td>
+                <button type="button" (click)="delete(deck)">Delete</button>
+                <button type="button" (click)="edit(deck)">Edit</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
