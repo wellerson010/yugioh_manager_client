@@ -43,8 +43,12 @@ System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../m
                     this.deck_type = deck_type_1.DeckType;
                 }
                 DeckComponent.prototype.ngOnInit = function () {
+                    var _this = this;
                     var id = this._routeParams.get('id');
-                    if (!id) {
+                    if (id) {
+                        this._deckService.get(id).then(function (deck) {
+                            _this.deck = deck;
+                        });
                     }
                 };
                 DeckComponent.prototype.cancel = function () {

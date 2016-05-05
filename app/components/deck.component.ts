@@ -26,8 +26,10 @@ export class DeckComponent implements OnInit {
     ngOnInit() {
         let id = this._routeParams.get('id');
 
-        if (!id) {
-
+        if (id) {
+            this._deckService.get(id).then((deck) => {
+                this.deck = deck;
+            });
         }
     }
     

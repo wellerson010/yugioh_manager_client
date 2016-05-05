@@ -1,9 +1,18 @@
-import {Http, Response, RequestOptions, Headers} from 'angular2/http';
+import {Http, Response, RequestOptions, Headers, URLSearchParams} from 'angular2/http';
+
+const transformQueryString = (queryString: Object): URLSearchParams => {
+    let params = new URLSearchParams();
+    for (let i in queryString) {
+        params.set(i, queryString[i])
+    };
+    return params;
+}
 
 export const CommonRequest = {
-    delete: (http: Http, url: string, id) => {
+    delete: (http: Http, url: string, queryString: Object) => {
+        let params = transformQueryString(queryString);
         let options = new RequestOptions({
-            body: JSON.stringify(id)
+            search: params
         });
         return http.delete(url, options)
             .map(CommonRequest.extractData)
@@ -16,8 +25,12 @@ export const CommonRequest = {
         let body = res.json();
         return body || {};
     },
-    get: (http: Http, url: string) => {
-        return http.get(url)
+    get: (http: Http, url: string, queryString?: Object) => {
+        let options = new RequestOptions();
+        if (queryString) {
+            options.search = transformQueryString(queryString);
+        }
+        return http.get(url, options)
             .map(CommonRequest.extractData)
             .toPromise();
     },

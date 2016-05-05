@@ -2,17 +2,26 @@ System.register(['angular2/http'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var http_1;
-    var CommonRequest;
+    var transformQueryString, CommonRequest;
     return {
         setters:[
             function (http_1_1) {
                 http_1 = http_1_1;
             }],
         execute: function() {
+            transformQueryString = function (queryString) {
+                var params = new http_1.URLSearchParams();
+                for (var i in queryString) {
+                    params.set(i, queryString[i]);
+                }
+                ;
+                return params;
+            };
             exports_1("CommonRequest", CommonRequest = {
-                delete: function (http, url, id) {
+                delete: function (http, url, queryString) {
+                    var params = transformQueryString(queryString);
                     var options = new http_1.RequestOptions({
-                        body: JSON.stringify(id)
+                        search: params
                     });
                     return http.delete(url, options)
                         .map(CommonRequest.extractData)
@@ -25,8 +34,12 @@ System.register(['angular2/http'], function(exports_1, context_1) {
                     var body = res.json();
                     return body || {};
                 },
-                get: function (http, url) {
-                    return http.get(url)
+                get: function (http, url, queryString) {
+                    var options = new http_1.RequestOptions();
+                    if (queryString) {
+                        options.search = transformQueryString(queryString);
+                    }
+                    return http.get(url, options)
                         .map(CommonRequest.extractData)
                         .toPromise();
                 },

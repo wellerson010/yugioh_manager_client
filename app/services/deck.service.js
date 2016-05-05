@@ -34,19 +34,22 @@ System.register(['angular2/http', '../config', 'angular2/core', '../common/reque
                 function DeckService(_http, _formDataService) {
                     this._http = _http;
                     this._formDataService = _formDataService;
-                    this.urlDeck = config_1.Config.urlApi + 'deck/';
+                    this.urlDeck = config_1.Config.urlApi + 'deck';
                 }
                 DeckService.prototype.delete = function (id) {
-                    var url = this.urlDeck + 'delete';
+                    var url = this.urlDeck + '/delete';
                     return request_1.CommonRequest.delete(this._http, url, { id: id });
                 };
+                DeckService.prototype.get = function (id) {
+                    return request_1.CommonRequest.get(this._http, this.urlDeck, { id: id });
+                };
                 DeckService.prototype.getAll = function () {
-                    var url = this.urlDeck + 'all';
+                    var url = this.urlDeck + '/all';
                     return request_1.CommonRequest.get(this._http, url);
                 };
                 DeckService.prototype.save = function (deck, imageChanged, picture) {
                     var _this = this;
-                    var url = this.urlDeck + 'save';
+                    var url = this.urlDeck + '/save';
                     return request_1.CommonRequest.post(this._http, url, deck).then(function (data) {
                         var id = data.id;
                         if (imageChanged) {
@@ -60,7 +63,7 @@ System.register(['angular2/http', '../config', 'angular2/core', '../common/reque
                     });
                 };
                 DeckService.prototype.uploadImage = function (data) {
-                    var url = this.urlDeck + 'uploadImage';
+                    var url = this.urlDeck + '/uploadImage';
                     return request_1.CommonRequest.postFormData(url, data);
                 };
                 DeckService = __decorate([

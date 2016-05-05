@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../config', '../services/deck.service'], function(exports_1, context_1) {
+System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '../config', '../services/deck.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['angular2/core', 'angular2/router', '../config', '../services/d
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, config_1, deck_service_1;
+    var core_1, my_date_pipe_1, router_1, config_1, deck_service_1;
     var DecksComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (my_date_pipe_1_1) {
+                my_date_pipe_1 = my_date_pipe_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -43,7 +46,8 @@ System.register(['angular2/core', 'angular2/router', '../config', '../services/d
                         alert('a');
                     });
                 };
-                DecksComponent.prototype.edit = function () {
+                DecksComponent.prototype.edit = function (deck) {
+                    this._router.navigate(['Deck', { id: deck._id }]);
                 };
                 DecksComponent.prototype.getAll = function () {
                     var _this = this;
@@ -52,12 +56,16 @@ System.register(['angular2/core', 'angular2/router', '../config', '../services/d
                     });
                 };
                 DecksComponent.prototype.setThumbnail = function (deck) {
-                    return 'url(' + config_1.Config.urlApi + 'card_images/' + deck._id + '.jpg' + ')';
+                    if (deck.picture) {
+                        return 'url(' + config_1.Config.urlApi + 'card_images/' + deck._id + '.jpg' + ')';
+                    }
+                    return '';
                 };
                 DecksComponent = __decorate([
                     core_1.Component({
                         selector: 'decks',
-                        templateUrl: 'app/templates/decks-component.html'
+                        templateUrl: 'app/templates/decks-component.html',
+                        pipes: [my_date_pipe_1.MyDatePipe]
                     }), 
                     __metadata('design:paramtypes', [deck_service_1.DeckService, router_1.Router])
                 ], DecksComponent);

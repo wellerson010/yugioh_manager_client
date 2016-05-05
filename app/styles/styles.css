@@ -13,8 +13,14 @@ li {
     list-style: none;
 }
 
+.thumbnail-table{
+        width: 40px;
+    height: 60px;
+    margin: 0 auto;
+    background: transparent center/cover no-repeat;
+}
 /* table */
-
+/*
 table {
     width: 100%;
     border-collapse: collapse;
@@ -43,8 +49,8 @@ td {
         border-bottom: 1px solid #D6B5B5;
 }
 
-.thumbnail-table{
-        width: 60px;
-    height: 80px;
-    background: transparent center/cover no-repeat;
-}
+
+
+input, select{
+    padding: 5px;
+}*/

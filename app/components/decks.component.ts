@@ -1,4 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
+import {MyDatePipe} from '../pipes/my-date.pipe';
 import {Router} from 'angular2/router';
 import {Deck} from '../model/deck';
 import {Config} from '../config';
@@ -6,7 +7,8 @@ import {DeckService} from '../services/deck.service';
 
 @Component({
     selector: 'decks', 
-    templateUrl: 'app/templates/decks-component.html'
+    templateUrl: 'app/templates/decks-component.html',
+    pipes: [MyDatePipe]
 })
 export class DecksComponent implements OnInit{
     decks: Deck[];
@@ -27,8 +29,8 @@ export class DecksComponent implements OnInit{
         });
     }
 
-    edit() {
-
+    edit(deck: Deck) {
+        this._router.navigate(['Deck', { id: deck._id }])
     }
    
     getAll() {
@@ -38,6 +40,9 @@ export class DecksComponent implements OnInit{
     }
 
     setThumbnail(deck: Deck) {
-        return 'url(' + Config.urlApi + 'card_images/' + deck._id + '.jpg' + ')';
+        if (deck.picture) {
+            return 'url(' + Config.urlApi + 'card_images/' + deck._id + '.jpg' + ')';
+        }
+        return '';
     }
 }
