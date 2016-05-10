@@ -2,6 +2,7 @@ import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router} from 'angular2
 import {Component} from 'angular2/core';
 
 //Services
+import {AlertService} from '../services/alert.service';
 import {CardService} from '../services/card.service';
 import {DeckService} from '../services/deck.service';
 import {FormDataService} from '../services/form-data.service';
@@ -17,7 +18,7 @@ import {HomeComponent} from './home.component';
     selector: 'my-app',
     templateUrl: 'app/templates/app-component.html',
     styleUrls: ['app/styles/app.component.css'],
-    providers: [ROUTER_PROVIDERS, CardService, DeckService, FormDataService],
+    providers: [ROUTER_PROVIDERS, AlertService, CardService, DeckService, FormDataService],
     directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([

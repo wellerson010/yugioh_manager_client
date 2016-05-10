@@ -4,6 +4,7 @@ import {Router} from 'angular2/router';
 import {Deck} from '../model/deck';
 import {Config} from '../config';
 import {DeckService} from '../services/deck.service';
+import {AlertService} from '../services/alert.service';
 
 @Component({
     selector: 'decks', 
@@ -13,7 +14,7 @@ import {DeckService} from '../services/deck.service';
 export class DecksComponent implements OnInit{
     decks: Deck[];
 
-    constructor(private _deckService: DeckService, private _router: Router) { }
+    constructor(private _deckService: DeckService, private _router: Router, private _alertService: AlertService) { }
 
     ngOnInit() {
         this.getAll();
@@ -24,7 +25,11 @@ export class DecksComponent implements OnInit{
     }
 
     delete(deck: Deck) {
-        this._deckService.delete(deck._id).then(function () {
+        this._alertService.confirm('Deseja mesmo apagar esse deck?', this.deleteConfirm.bind(this, deck._id))
+    }
+
+    private deleteConfirm(id: string) {
+        this._deckService.delete(id).then(function () {
             alert('a');
         });
     }
@@ -34,9 +39,15 @@ export class DecksComponent implements OnInit{
     }
    
     getAll() {
-        this._deckService.getAll().then((obj) => {
-            this.decks = obj;
-        })
+        this._deckService.getAll().then((decks) => {
+            this.decks = decks;
+        });
+    }
+
+    refresh() {
+        this._deckService.refresh().then((decks) => {
+            this.decks = decks;
+        });
     }
 
     setThumbnail(deck: Deck) {

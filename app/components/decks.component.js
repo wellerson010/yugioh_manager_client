@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '../config', '../services/deck.service'], function(exports_1, context_1) {
+System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '../config', '../services/deck.service', '../services/alert.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '.
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, my_date_pipe_1, router_1, config_1, deck_service_1;
+    var core_1, my_date_pipe_1, router_1, config_1, deck_service_1, alert_service_1;
     var DecksComponent;
     return {
         setters:[
@@ -28,12 +28,16 @@ System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '.
             },
             function (deck_service_1_1) {
                 deck_service_1 = deck_service_1_1;
+            },
+            function (alert_service_1_1) {
+                alert_service_1 = alert_service_1_1;
             }],
         execute: function() {
             DecksComponent = (function () {
-                function DecksComponent(_deckService, _router) {
+                function DecksComponent(_deckService, _router, _alertService) {
                     this._deckService = _deckService;
                     this._router = _router;
+                    this._alertService = _alertService;
                 }
                 DecksComponent.prototype.ngOnInit = function () {
                     this.getAll();
@@ -42,7 +46,10 @@ System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '.
                     this._router.navigate(['Deck', { id: 0 }]);
                 };
                 DecksComponent.prototype.delete = function (deck) {
-                    this._deckService.delete(deck._id).then(function () {
+                    this._alertService.confirm('Deseja mesmo apagar esse deck?', this.deleteConfirm.bind(this, deck._id));
+                };
+                DecksComponent.prototype.deleteConfirm = function (id) {
+                    this._deckService.delete(id).then(function () {
                         alert('a');
                     });
                 };
@@ -51,8 +58,14 @@ System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '.
                 };
                 DecksComponent.prototype.getAll = function () {
                     var _this = this;
-                    this._deckService.getAll().then(function (obj) {
-                        _this.decks = obj;
+                    this._deckService.getAll().then(function (decks) {
+                        _this.decks = decks;
+                    });
+                };
+                DecksComponent.prototype.refresh = function () {
+                    var _this = this;
+                    this._deckService.refresh().then(function (decks) {
+                        _this.decks = decks;
                     });
                 };
                 DecksComponent.prototype.setThumbnail = function (deck) {
@@ -67,7 +80,7 @@ System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '.
                         templateUrl: 'app/templates/decks-component.html',
                         pipes: [my_date_pipe_1.MyDatePipe]
                     }), 
-                    __metadata('design:paramtypes', [deck_service_1.DeckService, router_1.Router])
+                    __metadata('design:paramtypes', [deck_service_1.DeckService, router_1.Router, alert_service_1.AlertService])
                 ], DecksComponent);
                 return DecksComponent;
             }());

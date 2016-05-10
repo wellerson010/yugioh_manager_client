@@ -43,9 +43,21 @@ System.register(['angular2/http', '../config', 'angular2/core', '../common/reque
                 DeckService.prototype.get = function (id) {
                     return request_1.CommonRequest.get(this._http, this.urlDeck, { id: id });
                 };
-                DeckService.prototype.getAll = function () {
+                DeckService.prototype.getAll = function (forceRefresh) {
+                    var _this = this;
                     var url = this.urlDeck + '/all';
-                    return request_1.CommonRequest.get(this._http, url);
+                    if (this.decks && !forceRefresh) {
+                        return Promise.resolve(this.decks);
+                    }
+                    else {
+                        return request_1.CommonRequest.get(this._http, url).then(function (decks) {
+                            _this.decks = decks;
+                            return decks;
+                        });
+                    }
+                };
+                DeckService.prototype.refresh = function () {
+                    return this.getAll(true);
                 };
                 DeckService.prototype.save = function (deck, imageChanged, picture) {
                     var _this = this;

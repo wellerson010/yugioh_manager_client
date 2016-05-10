@@ -1,5 +1,6 @@
 <div class="container-button-table">
     <button type="button" (click)="add()" class="btn btn-default">Add</button>
+    <button type="button" (click)="refresh()" class="btn btn-default">Refresh</button>
 </div>
 <div class="table-responsive">
     <table class="table table-hover">
@@ -31,8 +32,8 @@
                 <td>{{deck.price}}</td>
                 <td>{{deck.purchase_date | myDate}}</td>
                 <td>
-                    <button type="button" (click)="delete(deck)">Delete</button>
-                    <button type="button" (click)="edit(deck)">Edit</button>
+                    <button type="button" class="btn btn-default" (click)="edit(deck)">Edit</button>
+                    <button type="button" class="btn btn-danger" (click)="delete(deck)">Delete</button>
                 </td>
             </tr>
         </tbody>

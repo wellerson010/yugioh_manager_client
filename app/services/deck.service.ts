@@ -8,10 +8,13 @@ import {FormDataService} from './form-data.service';
 
 @Injectable()
 export class DeckService {
+    private decks: Deck[];
+
     private urlDeck = Config.urlApi + 'deck';
 
     constructor(private _http: Http,
         private _formDataService: FormDataService) { }
+
 
     delete(id: string) {
         let url = this.urlDeck + '/delete';
@@ -21,10 +24,22 @@ export class DeckService {
     get(id: string) {
         return CommonRequest.get(this._http, this.urlDeck, { id: id });
     }
-    
-    getAll() {
+
+    getAll(forceRefresh?: boolean) {
         let url = this.urlDeck + '/all';
-        return CommonRequest.get(this._http, url);
+        if (this.decks && !forceRefresh) {
+            return Promise.resolve(this.decks);
+        }
+        else {
+            return CommonRequest.get(this._http, url).then(decks => {
+                this.decks = decks;
+                return decks;
+            });
+        }
+    }
+
+    refresh() {
+        return this.getAll(true);
     }
 
     save(deck: Deck, imageChanged:boolean, picture) {

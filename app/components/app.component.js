@@ -1,4 +1,4 @@
-System.register(['angular2/router', 'angular2/core', '../services/card.service', '../services/deck.service', '../services/form-data.service', './cards.component', './card.component', './deck.component', './decks.component', './home.component'], function(exports_1, context_1) {
+System.register(['angular2/router', 'angular2/core', '../services/alert.service', '../services/card.service', '../services/deck.service', '../services/form-data.service', './cards.component', './card.component', './deck.component', './decks.component', './home.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/router', 'angular2/core', '../services/card.service',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var router_1, core_1, card_service_1, deck_service_1, form_data_service_1, cards_component_1, card_component_1, deck_component_1, decks_component_1, home_component_1;
+    var router_1, core_1, alert_service_1, card_service_1, deck_service_1, form_data_service_1, cards_component_1, card_component_1, deck_component_1, decks_component_1, home_component_1;
     var AppComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/router', 'angular2/core', '../services/card.service',
             },
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (alert_service_1_1) {
+                alert_service_1 = alert_service_1_1;
             },
             function (card_service_1_1) {
                 card_service_1 = card_service_1_1;
@@ -63,7 +66,7 @@ System.register(['angular2/router', 'angular2/core', '../services/card.service',
                         selector: 'my-app',
                         templateUrl: 'app/templates/app-component.html',
                         styleUrls: ['app/styles/app.component.css'],
-                        providers: [router_1.ROUTER_PROVIDERS, card_service_1.CardService, deck_service_1.DeckService, form_data_service_1.FormDataService],
+                        providers: [router_1.ROUTER_PROVIDERS, alert_service_1.AlertService, card_service_1.CardService, deck_service_1.DeckService, form_data_service_1.FormDataService],
                         directives: [router_1.ROUTER_DIRECTIVES]
                     }),
                     router_1.RouteConfig([
