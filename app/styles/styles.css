@@ -19,38 +19,29 @@ li {
     margin: 0 auto;
     background: transparent center/cover no-repeat;
 }
-/* table */
-/*
-table {
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.container-preview-image{
+    background: transparent center/contain no-repeat;
     width: 100%;
-    border-collapse: collapse;
+    height: 300px;
 }
-
-thead {
-    background-color: #27282B;
-}
-
-    thead td {
-        padding: 10px;
-        color: #ffffff;
-    }
-
-tbody {
-    background-color: #D4D4D4;
-}
-
-tbody td {
-    padding: 7px;
-    color: #000000;
-}
-
-td {
-    border-right: 1px solid #B5B1B1;
-        border-bottom: 1px solid #D6B5B5;
-}
-
-
-
-input, select{
-    padding: 5px;
-}*/

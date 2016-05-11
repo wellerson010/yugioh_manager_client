@@ -42,6 +42,13 @@ System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '.
                 DecksComponent.prototype.ngOnInit = function () {
                     this.getAll();
                 };
+                Object.defineProperty(DecksComponent.prototype, "decks", {
+                    get: function () {
+                        return this._deckService.decks;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 DecksComponent.prototype.add = function () {
                     this._router.navigate(['Deck', { id: 0 }]);
                 };
@@ -49,24 +56,16 @@ System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '.
                     this._alertService.confirm('Deseja mesmo apagar esse deck?', this.deleteConfirm.bind(this, deck._id));
                 };
                 DecksComponent.prototype.deleteConfirm = function (id) {
-                    this._deckService.delete(id).then(function () {
-                        alert('a');
-                    });
+                    this._deckService.delete(id).then(this._alertService.alert.bind(this, 'Deck deletado com sucesso!'));
                 };
                 DecksComponent.prototype.edit = function (deck) {
                     this._router.navigate(['Deck', { id: deck._id }]);
                 };
                 DecksComponent.prototype.getAll = function () {
-                    var _this = this;
-                    this._deckService.getAll().then(function (decks) {
-                        _this.decks = decks;
-                    });
+                    this._deckService.getAll();
                 };
                 DecksComponent.prototype.refresh = function () {
-                    var _this = this;
-                    this._deckService.refresh().then(function (decks) {
-                        _this.decks = decks;
-                    });
+                    this._deckService.refresh();
                 };
                 DecksComponent.prototype.setThumbnail = function (deck) {
                     if (deck.picture) {

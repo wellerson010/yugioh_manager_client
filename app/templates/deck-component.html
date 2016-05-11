@@ -1,40 +1,45 @@
 <form>
-    <div>
-        <label>
-            Name:
-        </label>
-        <input [(ngModel)]="deck.name" />
-    </div>
-    <div>
-        <label>
-            Type:
-        </label>
-        <select [(ngModel)]="deck.type" [value]="deck_type.Deck">
-            <option *ngFor="let item of deck_type | enumPipe" [value]="item.key">
-                {{item.value}}
-            </option>
-        </select>
-    </div>
-    <div>
-        <label>
-            Price:
-        </label>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="txt-name">Name</label>
+                <input type="text" class="form-control" id="txt-name" [(ngModel)]="deck.name">
+            </div>
+            <div class="form-group">
+                <label for="txt-type">Type</label>
+                <select class="form-control" id="txt-type" [(ngModel)]="deck.type" [value]="deck_type.Deck">
+                    <option *ngFor="let item of deck_type | enumPipe" [value]="item.key">
+                        {{item.value}}
+                    </option>
+                </select>
+            </div>
 
-        <input [(ngModel)]="deck.price" />
-    </div>
-    <div>
-        <label>
-            Purchase Date:
-        </label>
-        <input type="date" [(ngModel)]="deck.purchase_date" />
-    </div>
+            <div class="form-group">
+                <label for="txt-price">Name</label>
+                <input type="text" class="form-control" id="txt-price" [(ngModel)]="deck.price">
+            </div>
 
-    <div>
-        <input type="file" accept="image/*" (change)="changeImage($event.target.files)"/>
+            <div class="form-group">
+                <label for="input-date">Name</label>
+                <input type="date" class="form-control" id="input-date" [(ngModel)]="deck.purchase_date">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            Imagem
+            <div class="container-preview-image" [style.backgroundImage] ="previewUrlImage">
+
+            </div>
+            <div>
+                <span class="btn btn-default btn-file">
+                    Browse <input type="file" accept="image/*" (change)="changeImage($event.target.files)" />
+                </span>
+            </div>
+        </div>
     </div>
 </form>
 
 <div>
-    <button type="button" (click)="save()">Save</button>
-    <button type="button" (click)="cancel()">Cancel</button>
+    <button type="button" (click)="save()" class="btn btn-success">Save</button>
+    <button type="button" (click)="cancel()" class="btn btn-danger">Cancel</button>
 </div>

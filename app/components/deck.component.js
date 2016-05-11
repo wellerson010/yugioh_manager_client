@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../model/deck', '../services/deck.service', '../model/enum/deck_type'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../model/deck', '../services/deck.service', '../model/enum/deck_type', '../services/file-preview-service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../m
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, enum_pipe_1, deck_1, deck_service_1, deck_type_1;
+    var core_1, router_1, enum_pipe_1, deck_1, deck_service_1, deck_type_1, file_preview_service_1;
     var DeckComponent;
     return {
         setters:[
@@ -31,17 +31,31 @@ System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../m
             },
             function (deck_type_1_1) {
                 deck_type_1 = deck_type_1_1;
+            },
+            function (file_preview_service_1_1) {
+                file_preview_service_1 = file_preview_service_1_1;
             }],
         execute: function() {
             DeckComponent = (function () {
-                function DeckComponent(_routeParams, _router, _deckService) {
+                function DeckComponent(_routeParams, _router, _deckService, _filePreviewService) {
                     this._routeParams = _routeParams;
                     this._router = _router;
                     this._deckService = _deckService;
+                    this._filePreviewService = _filePreviewService;
                     this._imageChanged = false;
                     this.deck = new deck_1.Deck();
                     this.deck_type = deck_type_1.DeckType;
                 }
+                Object.defineProperty(DeckComponent.prototype, "previewUrlImage", {
+                    get: function () {
+                        if (this._previewUrlImage) {
+                            return 'url(' + this._previewUrlImage + ')';
+                        }
+                        return '';
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 DeckComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     var id = this._routeParams.get('id');
@@ -55,8 +69,12 @@ System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../m
                     this._router.navigate(['Decks']);
                 };
                 DeckComponent.prototype.changeImage = function (files) {
+                    var _this = this;
                     if (files.length > 0) {
                         this._picture = files[0];
+                        this._filePreviewService.getUrl(this._picture).then(function (url) {
+                            _this._previewUrlImage = url;
+                        });
                     }
                     else {
                         this._picture = null;
@@ -73,9 +91,10 @@ System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../m
                     core_1.Component({
                         selector: 'deck',
                         templateUrl: 'app/templates/deck-component.html',
-                        pipes: [enum_pipe_1.EnumPipe]
+                        pipes: [enum_pipe_1.EnumPipe],
+                        providers: [file_preview_service_1.FilePreviewService]
                     }), 
-                    __metadata('design:paramtypes', [router_1.RouteParams, router_1.Router, deck_service_1.DeckService])
+                    __metadata('design:paramtypes', [router_1.RouteParams, router_1.Router, deck_service_1.DeckService, file_preview_service_1.FilePreviewService])
                 ], DeckComponent);
                 return DeckComponent;
             }());

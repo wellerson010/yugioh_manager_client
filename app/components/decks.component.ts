@@ -12,12 +12,15 @@ import {AlertService} from '../services/alert.service';
     pipes: [MyDatePipe]
 })
 export class DecksComponent implements OnInit{
-    decks: Deck[];
 
     constructor(private _deckService: DeckService, private _router: Router, private _alertService: AlertService) { }
 
     ngOnInit() {
         this.getAll();
+    }
+
+    get decks() {
+        return this._deckService.decks;
     }
 
     add() {
@@ -29,9 +32,7 @@ export class DecksComponent implements OnInit{
     }
 
     private deleteConfirm(id: string) {
-        this._deckService.delete(id).then(function () {
-            alert('a');
-        });
+        this._deckService.delete(id).then(this._alertService.alert.bind(this, 'Deck deletado com sucesso!'));
     }
 
     edit(deck: Deck) {
@@ -39,15 +40,11 @@ export class DecksComponent implements OnInit{
     }
    
     getAll() {
-        this._deckService.getAll().then((decks) => {
-            this.decks = decks;
-        });
+        this._deckService.getAll();
     }
 
     refresh() {
-        this._deckService.refresh().then((decks) => {
-            this.decks = decks;
-        });
+        this._deckService.refresh();
     }
 
     setThumbnail(deck: Deck) {

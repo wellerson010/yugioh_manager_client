@@ -37,27 +37,31 @@ System.register(['angular2/http', '../config', 'angular2/core', '../common/reque
                     this.urlDeck = config_1.Config.urlApi + 'deck';
                 }
                 DeckService.prototype.delete = function (id) {
+                    var _this = this;
                     var url = this.urlDeck + '/delete';
-                    return request_1.CommonRequest.delete(this._http, url, { id: id });
+                    return request_1.CommonRequest.delete(this._http, url, { id: id }).then(function () {
+                        for (var i = 0; i < _this.decks.length; i++) {
+                            if (_this.decks[i]._id == id) {
+                                _this.decks.splice(i, 1);
+                                break;
+                            }
+                        }
+                    });
                 };
                 DeckService.prototype.get = function (id) {
                     return request_1.CommonRequest.get(this._http, this.urlDeck, { id: id });
                 };
                 DeckService.prototype.getAll = function (forceRefresh) {
                     var _this = this;
-                    var url = this.urlDeck + '/all';
-                    if (this.decks && !forceRefresh) {
-                        return Promise.resolve(this.decks);
-                    }
-                    else {
-                        return request_1.CommonRequest.get(this._http, url).then(function (decks) {
+                    if (!this.decks || forceRefresh) {
+                        var url = this.urlDeck + '/all';
+                        request_1.CommonRequest.get(this._http, url).then(function (decks) {
                             _this.decks = decks;
-                            return decks;
                         });
                     }
                 };
                 DeckService.prototype.refresh = function () {
-                    return this.getAll(true);
+                    this.getAll(true);
                 };
                 DeckService.prototype.save = function (deck, imageChanged, picture) {
                     var _this = this;

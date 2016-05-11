@@ -8,6 +8,9 @@ System.register([], function(exports_1, context_1) {
             AlertService = (function () {
                 function AlertService() {
                 }
+                AlertService.prototype.alert = function (message) {
+                    alertify.alert(message);
+                };
                 AlertService.prototype.confirm = function (message, callbackSuccess) {
                     alertify.confirm(message, callbackSuccess);
                 };
