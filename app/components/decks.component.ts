@@ -49,7 +49,7 @@ export class DecksComponent implements OnInit{
 
     setThumbnail(deck: Deck) {
         if (deck.picture) {
-            return 'url(' + Config.urlApi + 'card_images/' + deck._id + '.jpg' + ')';
+            return 'url(' + Config.urlDeckImage + deck.picture + ')';
         }
         return '';
     }

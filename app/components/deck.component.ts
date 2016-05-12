@@ -1,4 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
+import {Config} from '../config';
 import {RouteParams, Router} from 'angular2/router';
 import {EnumPipe} from '../pipes/enum.pipe';
 import {Deck} from '../model/deck';
@@ -32,7 +33,7 @@ export class DeckComponent implements OnInit {
         if (this._previewUrlImage) {
             return 'url(' + this._previewUrlImage + ')';
         }
-        return '';
+        return 'url(' + Config.urlImageNotFound + ')';
     }
    
     ngOnInit() {
@@ -41,6 +42,9 @@ export class DeckComponent implements OnInit {
         if (id) {
             this._deckService.get(id).then((deck) => {
                 this.deck = deck;
+                if (this.deck.picture) {
+                    this._previewUrlImage = Config.urlDeckImage + this.deck.picture;
+                }
             });
         }
     }
@@ -60,6 +64,11 @@ export class DeckComponent implements OnInit {
             this._picture = null;
         }
 
+        this._imageChanged = true;
+    }
+
+    deleteImage() {
+        this._previewUrlImage = '';
         this._imageChanged = true;
     }
 

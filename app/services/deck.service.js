@@ -71,12 +71,32 @@ System.register(['angular2/http', '../config', 'angular2/core', '../common/reque
                         if (imageChanged) {
                             if (picture) {
                                 var formData = _this._formDataService.buildToImage(picture, id);
-                                return _this.uploadImage(formData);
+                                return _this.uploadImage(formData).then(function (data) {
+                                    deck.picture = data.picture;
+                                    _this.saveModel(deck, id);
+                                });
                             }
                             else {
                             }
                         }
+                        else {
+                            _this.saveModel(deck, id);
+                        }
                     });
+                };
+                DeckService.prototype.saveModel = function (deck, id) {
+                    if (deck._id) {
+                        for (var i = 0; i < this.decks.length; i++) {
+                            if (this.decks[i]._id == deck._id) {
+                                this.decks[i] = deck;
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        deck._id = id;
+                        this.decks.push(deck);
+                    }
                 };
                 DeckService.prototype.uploadImage = function (data) {
                     var url = this.urlDeck + '/uploadImage';

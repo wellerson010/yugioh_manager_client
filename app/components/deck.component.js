@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../model/deck', '../services/deck.service', '../model/enum/deck_type', '../services/file-preview-service'], function(exports_1, context_1) {
+System.register(['angular2/core', '../config', 'angular2/router', '../pipes/enum.pipe', '../model/deck', '../services/deck.service', '../model/enum/deck_type', '../services/file-preview-service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../m
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, enum_pipe_1, deck_1, deck_service_1, deck_type_1, file_preview_service_1;
+    var core_1, config_1, router_1, enum_pipe_1, deck_1, deck_service_1, deck_type_1, file_preview_service_1;
     var DeckComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (config_1_1) {
+                config_1 = config_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -51,7 +54,7 @@ System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../m
                         if (this._previewUrlImage) {
                             return 'url(' + this._previewUrlImage + ')';
                         }
-                        return '';
+                        return 'url(' + config_1.Config.urlImageNotFound + ')';
                     },
                     enumerable: true,
                     configurable: true
@@ -62,6 +65,9 @@ System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../m
                     if (id) {
                         this._deckService.get(id).then(function (deck) {
                             _this.deck = deck;
+                            if (_this.deck.picture) {
+                                _this._previewUrlImage = config_1.Config.urlDeckImage + _this.deck.picture;
+                            }
                         });
                     }
                 };
@@ -79,6 +85,10 @@ System.register(['angular2/core', 'angular2/router', '../pipes/enum.pipe', '../m
                     else {
                         this._picture = null;
                     }
+                    this._imageChanged = true;
+                };
+                DeckComponent.prototype.deleteImage = function () {
+                    this._previewUrlImage = '';
                     this._imageChanged = true;
                 };
                 DeckComponent.prototype.save = function () {

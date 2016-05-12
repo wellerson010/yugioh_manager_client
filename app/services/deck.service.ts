@@ -1,6 +1,7 @@
 import {Http} from 'angular2/http';
 import {Config} from '../config';
 import {Injectable} from 'angular2/core';
+import {NgForm} from 'angular2/common';
 import {CommonRequest} from '../common/request';
 import {Deck} from '../model/deck';
 import {FormDataService} from './form-data.service';
@@ -49,18 +50,38 @@ export class DeckService {
     save(deck: Deck, imageChanged:boolean, picture) {
         let url = this.urlDeck + '/save';
         return CommonRequest.post(this._http, url, deck).then((data) => {
-            let id = data.id;
-
+            let id:string = data.id;
             if (imageChanged) {
                 if (picture) {
                     let formData = this._formDataService.buildToImage(picture, id);
-                    return this.uploadImage(formData);
+                    return this.uploadImage(formData).then((data: any) => {
+                        deck.picture = data.picture;
+                        this.saveModel(deck, id);
+                    });
                 }
                 else {
                     //deletar imagem
                 }
             }
+            else {
+                this.saveModel(deck, id);
+            }
         });
+    }
+
+    private saveModel(deck: Deck, id: string) {
+        if (deck._id) {
+            for (var i = 0; i < this.decks.length; i++) {
+                if (this.decks[i]._id == deck._id) {
+                    this.decks[i] = deck;
+                    break;
+                }
+            }
+        }
+        else {
+            deck._id = id;
+            this.decks.push(deck);
+        }
     }
 
     uploadImage(data: FormData) {

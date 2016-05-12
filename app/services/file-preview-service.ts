@@ -4,7 +4,7 @@ export class FilePreviewService {
             let reader = new FileReader();
 
             reader.onload = (event) => {
-                resolve(event.target.result);
+                resolve((event.target as any).result);
             }
 
             reader.readAsDataURL(file);

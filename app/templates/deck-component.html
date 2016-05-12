@@ -1,9 +1,14 @@
-<form>
+<form #formDeck="ngForm">
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
                 <label for="txt-name">Name</label>
-                <input type="text" class="form-control" id="txt-name" [(ngModel)]="deck.name">
+                <input type="text"
+                       class="form-control"
+                       id="txt-name"
+                       [(ngModel)]="deck.name"
+                       ngControl="name"
+                       required>
             </div>
             <div class="form-group">
                 <label for="txt-type">Type</label>
@@ -15,12 +20,12 @@
             </div>
 
             <div class="form-group">
-                <label for="txt-price">Name</label>
+                <label for="txt-price">Price</label>
                 <input type="text" class="form-control" id="txt-price" [(ngModel)]="deck.price">
             </div>
 
             <div class="form-group">
-                <label for="input-date">Name</label>
+                <label for="input-date">Purchase Date</label>
                 <input type="date" class="form-control" id="input-date" [(ngModel)]="deck.purchase_date">
             </div>
         </div>
@@ -34,12 +39,13 @@
                 <span class="btn btn-default btn-file">
                     Browse <input type="file" accept="image/*" (change)="changeImage($event.target.files)" />
                 </span>
+                <button type="button" (click)="deleteImage()" class="btn btn-danger">Delete</button>
             </div>
         </div>
     </div>
 </form>
 
 <div>
-    <button type="button" (click)="save()" class="btn btn-success">Save</button>
+    <button type="button" (click)="save()" class="btn btn-success" [disabled]="!formDeck.form.valid">Save</button>
     <button type="button" (click)="cancel()" class="btn btn-danger">Cancel</button>
 </div>

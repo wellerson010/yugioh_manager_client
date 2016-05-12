@@ -1,3 +1,7 @@
+const urlApi = 'http://localhost:3000/';
+
 export const Config = {
-    urlApi: 'http://localhost:3000/'
+    urlApi: urlApi,
+    urlImageNotFound: urlApi + 'common_images/no-image.png',
+    urlDeckImage: urlApi + 'deck_images/'
 }

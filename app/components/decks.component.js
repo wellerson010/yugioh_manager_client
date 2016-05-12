@@ -69,7 +69,7 @@ System.register(['angular2/core', '../pipes/my-date.pipe', 'angular2/router', '.
                 };
                 DecksComponent.prototype.setThumbnail = function (deck) {
                     if (deck.picture) {
-                        return 'url(' + config_1.Config.urlApi + 'card_images/' + deck._id + '.jpg' + ')';
+                        return 'url(' + config_1.Config.urlDeckImage + deck.picture + ')';
                     }
                     return '';
                 };
